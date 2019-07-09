@@ -163,11 +163,11 @@ void sistema_massamola(int tipo)
 {
     Cad_m m;
     float ver=0.0,var=0.0;
-    printf("\nDigite a constante elastica da mola (em N/m): ");
+    printf("\nDigite a constante elástica da mola (em N/m): ");
     do{
         scanf("%f",&m.constante_eslaticiade_mola);
         if(m.constante_eslaticiade_mola<=0)
-            printf("\nValor de contante elástica inválido, digite novamente!");
+            printf("\nValor de constante elástica inválido, digite novamente!");
     }while(m.constante_eslaticiade_mola<=0);
     if(tipo==1){
         printf("\nDigite a amplitude em metros: ");
@@ -202,7 +202,7 @@ void sistema_massamola(int tipo)
 void frequencia_angular()
 {
     int fr=4, i=0;
-    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -212,7 +212,7 @@ void frequencia_angular()
             sistema_massamola(fr);
             break;
         default:
-            printf("Opcao invalida, digite novamente:\n");
+            printf("Opcao inválida, digite novamente:\n");
             frequencia_angular();
     }
 }
@@ -220,7 +220,7 @@ void frequencia_angular()
 void periodo_e_frequencia()
 {
     int p=3,i=0;
-    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -230,7 +230,7 @@ void periodo_e_frequencia()
             sistema_massamola(p);
             break;
         default:
-            printf("Opcao invalida, digite novamente:\n");
+            printf("Opcao inválida, digite novamente:\n");
             periodo_e_frequencia();
     }
 }
@@ -238,7 +238,7 @@ void periodo_e_frequencia()
 void energia_potencial()
 {
     int e=2,i=0;
-    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -248,7 +248,7 @@ void energia_potencial()
             sistema_massamola(e);
             break;
         default:
-            printf("Opcao invalida, digite novamente:\n");
+            printf("Opcao inválida, digite novamente:\n");
             energia_potencial();
     }
 }
@@ -257,7 +257,7 @@ void forca()
 {
     int f=1;
     int i=0;
-    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -267,7 +267,7 @@ void forca()
             sistema_massamola(f);
             break;
         default:
-        printf("Opcao invalida, digite novamente:\n");
+        printf("Opcao inválida, digite novamente:\n");
         forca();
     }
 }
@@ -299,7 +299,7 @@ void menu()
         frequencia_angular();
         break;
     default:
-        printf("Opcao invalida, digite novamente:\n");
+        printf("Opcao inválida, digite novamente:\n");
         menu();
     }
 }
@@ -314,7 +314,6 @@ int main()
         printf("\nFalha ao abrir o arquivo\n");
         exit(1);
     }
-    void menu();
     menu();
 
     fclose(fd);

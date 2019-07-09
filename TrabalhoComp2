@@ -1,0 +1,323 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <locale.h>
+
+#define PI 3.14159265359
+#define G 9.81
+
+typedef struct Cadastro_mola{
+    float constante_eslaticiade_mola,amplitude_mola,massa_da_mola,periodo,frequencia,frequencia_angular;
+}Cad_m;
+typedef struct Cadastro_pendulo{
+    float massa_pendulo,comprimento,angulo,periodo,frequencia,frequencia_angular;
+}Cad_p;
+
+
+float graficoforcamassamola(float k, float x, float ver,float var)
+{
+    char ARQUIVO[]="/home/todos/alunos/ap/a2048132/Downloads/arq/dados.txt";
+    char MODO_DE_ACESSO[]="a";
+    FILE *fd=NULL;
+    if((fd=fopen(ARQUIVO,MODO_DE_ACESSO))==NULL){
+        printf("\nFalha ao abrir o arquivo\n");
+        exit(1);
+    }
+    float forca;
+    if(ver!=1.0){
+        var=x/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        ver=1.0;
+        x=var*(-5.0);
+    }
+    forca=x*(-1*k);
+    if(x==var*5){
+        fprintf(fd,"%f %f\n",forca, x);
+        return x;
+    }else{
+        graficoforcamassamola(k,x+var,ver,var);
+        fprintf(fd,"%f %f\n",forca,x);
+    }
+
+}
+float grafico_e_pot_massamola(float k, float x, float ver,float var)
+{
+    char ARQUIVO[]="/home/todos/alunos/ap/a2048132/Downloads/arq/dados.txt";
+    char MODO_DE_ACESSO[]="a";
+    FILE *fd=NULL;
+    if((fd=fopen(ARQUIVO,MODO_DE_ACESSO))==NULL){
+        printf("\nFalha ao abrir o arquivo\n");
+        exit(1);
+    }
+    float e;
+    if(ver!=1.0){
+        var=x/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        ver=1.0;
+        x=var*(-5.0);
+    }
+    e=x*x*k/2;
+    if(x==var*5){
+        fprintf(fd,"%f %f\n",e, x);
+        return x;
+    }else{
+        graficoforcamassamola(k,x+var,ver,var);
+        fprintf(fd,"%f %f\n",e,x);
+    }
+
+}
+float graficoforcapendulo(float massa, float angulo, float ver,float var)
+{
+    char ARQUIVO[]="/home/todos/alunos/ap/a2048132/Downloads/arq/dados.txt";
+    char MODO_DE_ACESSO[]="a";
+    FILE *fd=NULL;
+    if((fd=fopen(ARQUIVO,MODO_DE_ACESSO))==NULL){
+        printf("\nFalha ao abrir o arquivo\n");
+        exit(1);
+    }
+    float forca;
+    if(ver!=1.0){
+        var=angulo/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        ver=1.0;
+        angulo=var*(-5.0);
+    }
+    forca = sin(angulo)*massa*(-G);
+    if(angulo==var*5){
+        printf(fd,"%f %f\n",forca,angulo);
+        return angulo;
+    }else{
+        graficoforcamassamola(massa,angulo+var,ver,var);
+        fprintf(fd,"%f %f\n",forca,angulo);
+    }
+
+}
+float grafico_e_pot_pendulo(float massa, float angulo, float ver,float var,float comprimento)
+{
+    char ARQUIVO[]="/home/todos/alunos/ap/a2048132/Downloads/arq/dados.txt";
+    char MODO_DE_ACESSO[]="a";
+    FILE *fd=NULL;
+    if((fd=fopen(ARQUIVO,MODO_DE_ACESSO))==NULL){
+        printf("\nFalha ao abrir o arquivo\n");
+        exit(1);
+    }
+    float energia_pot;
+    if(ver!=1.0){
+        var=angulo/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        ver=1.0;
+        angulo=var*(-5.0);
+    }
+    energia_pot = massa*comprimento*G*(1-cos(angulo));
+    if(angulo==var*5){
+        printf(fd,"%f %f\n",energia_pot,angulo);
+        return angulo;
+    }else{
+        graficoforcamassamola(massa,angulo+var,ver,var);
+        fprintf(fd,"%f %f\n",energia_pot,angulo);
+    }
+
+}
+
+void pendulo_simples(int tipo)
+{
+    Cad_p p;
+    int ver=0.0,var=0.0;
+    if(tipo==1){
+        printf("Digite o valor da massa em kg:\n");
+        scanf("%f",&p.massa_pendulo);
+        printf("Digite o valor do seu angulo em °\n");
+        scanf("%f",&p.angulo);
+        p.angulo= (p.angulo*PI)/180;
+        graficoforcapendulo(p.massa_pendulo,p.angulo,ver,var);
+    }else if(tipo==4){
+        printf("Digite o valor do Comprimento do fio em metros:\n");
+        do{
+            scanf("%f",&p.comprimento);
+            if(p.comprimento<=0.0)
+                printf("Comprimento inválido, digite novamente:");
+        }while(p.comprimento<=0.0);
+        p.frequencia_angular=sqrt((G/p.comprimento));
+        printf("A frequência angular é de: %f rad/s\n",p.frequencia_angular);
+    }else if(tipo==3){
+        printf("Digite o valor do Comprimento do fio em metros:\n");
+        do{
+            scanf("%f",&p.comprimento);
+            if(p.comprimento<=0.0)
+                printf("\nComprimento inválido, digite novamente:");
+        }while(p.comprimento<=0.0);
+        p.frequencia_angular=sqrt((G/p.frequencia_angular));
+        p.periodo= 2*PI*p.frequencia_angular;
+        p.frequencia=1/p.periodo;
+        printf("O período e a frequência são, respectivamente: %.2f e %.2f\n",p.periodo,p.frequencia);
+    }else{
+        printf("Digite o valor da massa em kg:\n");
+        scanf("%f",&p.massa_pendulo);
+        printf("Digite o valor do seu angulo em °\n");
+        scanf("%f",&p.angulo);
+        printf("Digite o valor do Comprimento do fio em metros:\n");
+        scanf("%f",&p.comprimento);
+        p.angulo=(p.angulo*PI)/180;
+        grafico_e_pot_pendulo(p.massa_pendulo,p.angulo,ver,var,p.comprimento);
+    }
+
+}
+
+void sistema_massamola(int tipo)
+{
+    Cad_m m;
+    float ver=0.0,var=0.0;
+    printf("\nDigite a constante elastica da mola (em N/m): ");
+    do{
+        scanf("%f",&m.constante_eslaticiade_mola);
+        if(m.constante_eslaticiade_mola<=0)
+            printf("\nValor de contante elástica inválido, digite novamente!");
+    }while(m.constante_eslaticiade_mola<=0);
+    if(tipo==1){
+        printf("\nDigite a amplitude em metros: ");
+        scanf("%f",&m.amplitude_mola);
+        graficoforcamassamola(m.constante_eslaticiade_mola,m.amplitude_mola,ver,var);
+    }else if(tipo==4){
+        printf("Digite a massa: ");
+        do{
+            scanf("%f",&m.massa_da_mola);
+            if(m.massa_da_mola<=0)
+                printf("Digite novamente, valor inválido!\n");
+        }while(m.massa_da_mola<=0);
+        m.frequencia_angular=m.constante_eslaticiade_mola/m.massa_da_mola;
+        printf("A frequência angular é de: %f rad/s\n",m.frequencia_angular);
+    }else if(tipo==3){
+        printf("Digite a massa: ");
+        do{
+            scanf("%f",&m.massa_da_mola);
+            if(m.massa_da_mola<=0)
+                printf("Digite novamente, valor inválido!\n");
+        }while(m.massa_da_mola<=0);
+        m.frequencia_angular=m.constante_eslaticiade_mola/m.massa_da_mola;
+        m.periodo= 2*PI*m.frequencia_angular;
+        m.frequencia=1/m.periodo;
+        printf("O período e a frequência são, respectivamente: %.2f e %.2f\n",m.periodo,m.frequencia);
+    }else{
+        printf("\nDigite a amplitude em metros: ");
+        scanf("%f",&m.amplitude_mola);
+        grafico_e_pot_massamola(m.constante_eslaticiade_mola,m.amplitude_mola,ver,var);
+    }
+}
+void frequencia_angular()
+{
+    int fr=4, i=0;
+    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    scanf("%d",&i);
+    switch(i){
+        case 1:
+            pendulo_simples(fr);
+            break;
+        case 2:
+            sistema_massamola(fr);
+            break;
+        default:
+            printf("Opcao invalida, digite novamente:\n");
+            frequencia_angular();
+    }
+}
+
+void periodo_e_frequencia()
+{
+    int p=3,i=0;
+    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    scanf("%d",&i);
+    switch(i){
+        case 1:
+            pendulo_simples(p);
+            break;
+        case 2:
+            sistema_massamola(p);
+            break;
+        default:
+            printf("Opcao invalida, digite novamente:\n");
+            periodo_e_frequencia();
+    }
+}
+
+void energia_potencial()
+{
+    int e=2,i=0;
+    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    scanf("%d",&i);
+    switch(i){
+        case 1:
+            pendulo_simples(e);
+            break;
+        case 2:
+            sistema_massamola(e);
+            break;
+        default:
+            printf("Opcao invalida, digite novamente:\n");
+            energia_potencial();
+    }
+}
+
+void forca()
+{
+    int f=1;
+    int i=0;
+    printf("Digite 1 para pendulo simples, digite 2 para sistema massa-mola: \n");
+    scanf("%d",&i);
+    switch(i){
+        case 1:
+            pendulo_simples(f);
+            break;
+        case 2:
+            sistema_massamola(f);
+            break;
+        default:
+        printf("Opcao invalida, digite novamente:\n");
+        forca();
+    }
+}
+
+void menu()
+{
+    int i=0;
+    void forca();
+    void energia_mecanica();
+    printf("Digite:\n");
+    printf("1- Para determinar a Força:\n");
+    printf("2- Para determinar a Energia Potencial:\n");
+    printf("3- Para determinar a Frequência e o Período:\n");
+    printf("4- Para determinar a Frequência Angular:\n");
+    printf("Digite a opcao: ");
+
+    scanf("%d",&i);
+    switch(i){
+    case 1:
+        forca();
+        break;
+    case 2:
+        energia_potencial();
+        break;
+    case 3:
+        periodo_e_frequencia();
+        break;
+    case 4:
+        frequencia_angular();
+        break;
+    default:
+        printf("Opcao invalida, digite novamente:\n");
+        menu();
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL,"");
+    char ARQUIVO[]="/home/todos/alunos/ap/a2048132/Downloads/arq/dados.txt";
+    char MODO_DE_ACESSO[]="w";
+    FILE *fd=NULL;
+    if((fd=fopen(ARQUIVO,MODO_DE_ACESSO))==NULL){
+        printf("\nFalha ao abrir o arquivo\n");
+        exit(1);
+    }
+    void menu();
+    menu();
+
+    fclose(fd);
+    return 0;
+}
+

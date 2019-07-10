@@ -202,7 +202,8 @@ void sistema_massamola(int tipo)
 void frequencia_angular()
 {
     int fr=4, i=0;
-    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1- para pêndulo simples: \n");
+    printf("Digite 2- para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -220,7 +221,8 @@ void frequencia_angular()
 void periodo_e_frequencia()
 {
     int p=3,i=0;
-    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1- para pêndulo simples: \n");
+    printf("Digite 2- para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -238,7 +240,8 @@ void periodo_e_frequencia()
 void energia_potencial()
 {
     int e=2,i=0;
-    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1- para pêndulo simples: \n");
+    printf("Digite 2- para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -257,7 +260,8 @@ void forca()
 {
     int f=1;
     int i=0;
-    printf("Digite 1 para pêndulo simples, digite 2 para sistema massa-mola: \n");
+    printf("Digite 1- para pêndulo simples: \n");
+    printf("Digite 2- para sistema massa-mola: \n");
     scanf("%d",&i);
     switch(i){
         case 1:
@@ -319,4 +323,3 @@ int main()
     fclose(fd);
     return 0;
 }
-

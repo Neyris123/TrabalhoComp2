@@ -25,7 +25,7 @@ float graficoforcamassamola(float k, float x, float ver,float var)
     }
     float forca;
     if(ver!=1.0){
-        var=x/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        var=x/5.0;
         ver=1.0;
         x=var*(-5.0);
     }
@@ -50,7 +50,7 @@ float grafico_e_pot_massamola(float k, float x, float ver,float var)
     }
     float e;
     if(ver!=1.0){
-        var=x/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        var=x/5.0;
         ver=1.0;
         x=var*(-5.0);
     }
@@ -75,7 +75,7 @@ float graficoforcapendulo(float massa, float angulo, float ver,float var)
     }
     float forca;
     if(ver!=1.0){
-        var=angulo/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        var=angulo/5.0;
         ver=1.0;
         angulo=var*(-5.0);
     }
@@ -100,7 +100,7 @@ float grafico_e_pot_pendulo(float massa, float angulo, float ver,float var,float
     }
     float energia_pot;
     if(ver!=1.0){
-        var=angulo/5.0;//define q sao 11 pontos no grafico (por lado positivo, negativo e nulo)
+        var=angulo/5.0;
         ver=1.0;
         angulo=var*(-5.0);
     }
